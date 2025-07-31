@@ -20,4 +20,10 @@
     <Folder Include="Validators\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FitnessTracker.Application\FitnessTracker.Application.csproj" />
+    <ProjectReference Include="..\FitnessTracker.Domain\FitnessTracker.Domain.csproj" />
+    <ProjectReference Include="..\FitnessTracker.Infrastructrure\FitnessTracker.Infrastructrure.csproj" />
+  </ItemGroup>
+
 </Project>

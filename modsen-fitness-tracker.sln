@@ -4,8 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36310.24 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker.API", "FitnessTracker.API\FitnessTracker.API.csproj", "{0FD5929C-DE7D-41B1-9639-381568B8F3A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{80A3BFA9-0FDE-418B-AF75-79338A74C4FE} = {80A3BFA9-0FDE-418B-AF75-79338A74C4FE}
+		{8CA16298-B7DA-47FB-9FCA-3F603FDF0B80} = {8CA16298-B7DA-47FB-9FCA-3F603FDF0B80}
+		{AF95AA95-224F-4CE6-8D46-54D2C12AAD4A} = {AF95AA95-224F-4CE6-8D46-54D2C12AAD4A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker.Infrastructrure", "FitnessTracker.Infrastructrure\FitnessTracker.Infrastructrure.csproj", "{8CA16298-B7DA-47FB-9FCA-3F603FDF0B80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{80A3BFA9-0FDE-418B-AF75-79338A74C4FE} = {80A3BFA9-0FDE-418B-AF75-79338A74C4FE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker.Application", "FitnessTracker.Application\FitnessTracker.Application.csproj", "{AF95AA95-224F-4CE6-8D46-54D2C12AAD4A}"
 EndProject
