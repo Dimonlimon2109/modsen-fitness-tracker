@@ -10,8 +10,12 @@
     <Folder Include="Contracts\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Mappers\" />
-    <Folder Include="Services\" />
     <Folder Include="UseCases\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitnessTracker.Domain\FitnessTracker.Domain.csproj" />
   </ItemGroup>
 
 </Project>
