@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Responses\" />
     <Folder Include="Mappers\Users\" />
   </ItemGroup>
 

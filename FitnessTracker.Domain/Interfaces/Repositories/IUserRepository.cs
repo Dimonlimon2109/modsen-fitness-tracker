@@ -8,5 +8,10 @@ namespace FitnessTracker.Domain.Interfaces.Repositories
         Task<bool> IsUserExistsAsync(
             string email,
             CancellationToken ct = default);
+
+        Task<UserEntity?> GetUserByEmailAsync(
+            string email,
+            CancellationToken ct = default
+            );
     }
 }

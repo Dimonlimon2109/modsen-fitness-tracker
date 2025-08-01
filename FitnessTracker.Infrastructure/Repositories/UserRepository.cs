@@ -14,5 +14,13 @@ namespace FitnessTracker.Infrastructure.Repositories
         {
             return await _dbSet.AnyAsync(u => u.Email == email, ct);
         }
+
+        public async Task<UserEntity?> GetUserByEmailAsync(
+            string email,
+            CancellationToken ct = default
+            )
+        {
+            return await _dbSet.Where(u => u.Email == email).FirstOrDefaultAsync(ct);
+        }
     }
 }
