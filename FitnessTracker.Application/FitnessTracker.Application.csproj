@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
+    <Folder Include="Contracts\Responses\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="UseCases\" />
+    <Folder Include="Mappers\Users\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
