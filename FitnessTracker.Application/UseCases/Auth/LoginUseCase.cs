@@ -29,7 +29,7 @@ namespace FitnessTracker.Application.UseCases.Auth
             CancellationToken ct = default
             )
         {
-            var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
+            var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email, ct);
 
             if (user == null)
             {

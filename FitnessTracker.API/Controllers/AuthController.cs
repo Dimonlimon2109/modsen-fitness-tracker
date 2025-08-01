@@ -10,10 +10,15 @@ namespace FitnessTracker.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IRegisterUseCase _registerUseCase;
+        private readonly ILoginUseCase _loginUseCase;
 
-        public AuthController(IRegisterUseCase registerUseCase)
+        public AuthController(
+            IRegisterUseCase registerUseCase,
+            ILoginUseCase loginUseCase
+            )
         {
             _registerUseCase = registerUseCase;
+            _loginUseCase = loginUseCase;
         }
 
         [HttpPost("register")]
@@ -25,6 +30,16 @@ namespace FitnessTracker.API.Controllers
             await _registerUseCase.ExecuteAsync(registerRequest, ct);
 
             return Created();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(
+            LoginRequest loginRequest,
+            CancellationToken ct = default
+            )
+        {
+            var loginResponse = await _loginUseCase.ExecuteAsync(loginRequest, ct);
+            return Ok(loginResponse);
         }
     }
 }

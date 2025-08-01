@@ -9,7 +9,11 @@ using FitnessTracker.Infrastructure.Services;
 using FitnessTracker.Infrastructure.Services.Configurations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +35,9 @@ builder.Services.AddDbContext<FitnessDbContext>(options => {
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("JwtSettings"));
 
+builder.Services.AddSingleton(sp =>
+    sp.GetRequiredService<IOptions<JwtSettings>>().Value);
+
 // Validation
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(RegisterValidator));
@@ -41,11 +48,38 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Services
 builder.Services.AddScoped<IPasswordService, BCryptPasswordService>();
+builder.Services.AddScoped<ITokensService, JwtTokenService>();
 
 
 //UseCases
 //Auth
 builder.Services.AddScoped<IRegisterUseCase, RegisterUseCase>();
+builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+
+//jwt
+
+var jwtSettings = builder.Configuration
+    .GetSection(nameof(JwtSettings))
+    .Get<JwtSettings>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings!.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+        };
+    });
 
 
 var app = builder.Build();
