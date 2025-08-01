@@ -5,5 +5,8 @@ namespace FitnessTracker.Domain.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<UserEntity>
     {
+        Task<bool> IsUserExistsAsync(
+            string email,
+            CancellationToken ct = default);
     }
 }
