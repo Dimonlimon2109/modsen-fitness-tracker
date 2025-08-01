@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Application.Contracts.Requests;
+using FitnessTracker.Application.Contracts.Responses;
 using FitnessTracker.Application.Interfaces.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,17 @@ namespace FitnessTracker.API.Controllers
     {
         private readonly IRegisterUseCase _registerUseCase;
         private readonly ILoginUseCase _loginUseCase;
+        private readonly IRefreshTokensUseCase _refreshTokensUseCase;
 
         public AuthController(
             IRegisterUseCase registerUseCase,
-            ILoginUseCase loginUseCase
+            ILoginUseCase loginUseCase,
+            IRefreshTokensUseCase refreshTokensUseCase
             )
         {
             _registerUseCase = registerUseCase;
             _loginUseCase = loginUseCase;
+            _refreshTokensUseCase = refreshTokensUseCase;
         }
 
         [HttpPost("register")]
@@ -40,6 +44,16 @@ namespace FitnessTracker.API.Controllers
         {
             var loginResponse = await _loginUseCase.ExecuteAsync(loginRequest, ct);
             return Ok(loginResponse);
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh(
+            RefreshTokensRequest refreshTokensRequest,
+            CancellationToken ct = default
+            )
+        {
+            var refreshTokensResponse = await _refreshTokensUseCase.ExecuteAsync(refreshTokensRequest, ct);
+            return Ok(refreshTokensResponse);
         }
     }
 }

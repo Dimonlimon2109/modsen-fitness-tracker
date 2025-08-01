@@ -55,6 +55,7 @@ builder.Services.AddScoped<ITokensService, JwtTokenService>();
 //Auth
 builder.Services.AddScoped<IRegisterUseCase, RegisterUseCase>();
 builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+builder.Services.AddScoped<IRefreshTokensUseCase, RefreshTokensUseCase>();
 
 //jwt
 
