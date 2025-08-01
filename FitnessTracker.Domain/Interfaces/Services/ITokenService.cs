@@ -9,6 +9,6 @@ namespace FitnessTracker.Domain.Interfaces.Services
     {
         string GenerateAccessToken(UserEntity user);
         RefreshTokenModel GenerateRefreshToken();
-        ClaimsPrincipal GetPrincipalFromToken(string token);
+        string? GetEmailFromToken(string token);
     }
 }

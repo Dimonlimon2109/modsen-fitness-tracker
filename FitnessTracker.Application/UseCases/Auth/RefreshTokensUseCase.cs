@@ -28,8 +28,7 @@ namespace FitnessTracker.Application.UseCases.Auth
             CancellationToken ct = default
             )
         {
-            var claims = _tokensService.GetPrincipalFromToken(refreshTokensRequest.AccessToken);
-            var email = claims.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var email = _tokensService.GetEmailFromToken(refreshTokensRequest.AccessToken);
 
             if (email == null)
             {
