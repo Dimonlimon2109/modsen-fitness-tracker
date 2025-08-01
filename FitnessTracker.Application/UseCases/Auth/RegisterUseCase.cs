@@ -1,6 +1,6 @@
 ﻿
 using FitnessTracker.Application.Contracts.Requests;
-using FitnessTracker.Application.Exceptions;
+using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Domain.Entities;
 using FitnessTracker.Domain.Interfaces.Repositories;

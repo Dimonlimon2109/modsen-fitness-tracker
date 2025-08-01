@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using FitnessTracker.Application.Exceptions;
+using FitnessTracker.Application.Exceptions.Auth;
+using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Security;
@@ -28,7 +30,26 @@ namespace FitnessTracker.API.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 await HandleExceptionAsync(context, ex.Errors);
             }
-
+            catch (UnauthorizedException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                await HandleExceptionAsync(context, ex.Message);
+            }
+            catch (BadRequestException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                await HandleExceptionAsync(context, ex.Message);
+            }
+            catch (ConflictException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Conflict;
+                await HandleExceptionAsync(context, ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                await HandleExceptionAsync(context, ex.Message);
+            }
             catch (OperationCanceledException ex)
             {
                 context.Response.StatusCode = 499;

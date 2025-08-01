@@ -1,3 +1,4 @@
+using FitnessTracker.API.Middlewares;
 using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Application.UseCases.Auth;
 using FitnessTracker.Application.Validators.Auth;
@@ -110,6 +111,8 @@ builder.Services.AddAuthentication(options =>
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
