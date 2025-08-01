@@ -1,12 +1,13 @@
 ﻿
 using FitnessTracker.Application.Contracts.Requests;
+using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Domain.Entities;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using FitnessTracker.Domain.Interfaces.Services;
 
 namespace FitnessTracker.Application.UseCases.Auth
 {
-    public class RegisterUseCase
+    public class RegisterUseCase : IRegisterUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordService _passwordService;
@@ -23,7 +24,7 @@ namespace FitnessTracker.Application.UseCases.Auth
             )
         {
             var userExists = await _userRepository.IsUserExistsAsync(registerRequest.Email, ct);
-            if(userExists)
+            if (userExists)
             {
                 throw new ArgumentException("Пользователь с таким email уже существует");
             }
