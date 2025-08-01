@@ -2,7 +2,7 @@
 using FitnessTracker.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessTracker.Infrastructrure
+namespace FitnessTracker.Infrastructure
 {
     public class FitnessDbContext(DbContextOptions<FitnessDbContext> options) : DbContext(options)
     {

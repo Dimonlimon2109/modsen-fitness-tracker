@@ -1,7 +1,7 @@
 ﻿
 using FitnessTracker.Domain.Interfaces.Services;
 
-namespace FitnessTracker.Infrastructrure.Services
+namespace FitnessTracker.Infrastructure.Services
 {
     public class BCryptPasswordService : IPasswordService
     {

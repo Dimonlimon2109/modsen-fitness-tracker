@@ -3,7 +3,7 @@ using FitnessTracker.Domain.Entities;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessTracker.Infrastructrure.Repositories
+namespace FitnessTracker.Infrastructure.Repositories
 {
     public class UserRepository(FitnessDbContext context) : Repository<UserEntity>(context), IUserRepository
     {

@@ -3,7 +3,7 @@ using FitnessTracker.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FitnessTracker.Infrastructrure.Configurations
+namespace FitnessTracker.Infrastructure.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {

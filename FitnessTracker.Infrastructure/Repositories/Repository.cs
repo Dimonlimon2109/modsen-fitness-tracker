@@ -2,7 +2,7 @@
 using FitnessTracker.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessTracker.Infrastructrure.Repositories
+namespace FitnessTracker.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class, new()
     {
