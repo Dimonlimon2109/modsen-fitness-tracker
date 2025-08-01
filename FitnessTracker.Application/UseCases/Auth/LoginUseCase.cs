@@ -1,6 +1,7 @@
 ﻿
 using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Contracts.Responses;
+using FitnessTracker.Application.Exceptions;
 using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using FitnessTracker.Domain.Interfaces.Services;
@@ -33,12 +34,12 @@ namespace FitnessTracker.Application.UseCases.Auth
 
             if (user == null)
             {
-                throw new NullReferenceException("Пользователь не найден");
+                throw new UserNotFoundException("Пользователь не найден");
             }
 
             if (!_passwordService.ValidatePassword(loginRequest.Password, user.PasswordHash))
             {
-                throw new ArgumentException("Неверный пароль");
+                throw new InvalidCredentialsException("Неверный пароль");
             }
 
             var accessToken = _tokensService.GenerateAccessToken(user);

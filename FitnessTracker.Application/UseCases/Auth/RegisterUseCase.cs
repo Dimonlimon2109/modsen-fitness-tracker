@@ -1,5 +1,6 @@
 ﻿
 using FitnessTracker.Application.Contracts.Requests;
+using FitnessTracker.Application.Exceptions;
 using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Domain.Entities;
 using FitnessTracker.Domain.Interfaces.Repositories;
@@ -26,7 +27,7 @@ namespace FitnessTracker.Application.UseCases.Auth
             var userExists = await _userRepository.IsUserExistsAsync(registerRequest.Email, ct);
             if (userExists)
             {
-                throw new ArgumentException("Пользователь с таким email уже существует");
+                throw new UserAlreadyExistsException("Пользователь с таким email уже существует");
             }
 
             var user = new UserEntity

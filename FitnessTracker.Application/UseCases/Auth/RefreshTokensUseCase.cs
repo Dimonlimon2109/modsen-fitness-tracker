@@ -1,6 +1,7 @@
 ﻿
 using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Contracts.Responses;
+using FitnessTracker.Application.Exceptions;
 using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using FitnessTracker.Domain.Interfaces.Services;
@@ -32,18 +33,18 @@ namespace FitnessTracker.Application.UseCases.Auth
 
             if (email == null)
             {
-                throw new SecurityTokenException("Неверный access-token");
+                throw new InvalidTokenException("Неверный access-token");
             }
             var user = await _userRepository.GetUserByEmailAsync(email, ct);
 
             if (user == null)
             {
-                throw new NullReferenceException("Пользователь не найден");
+                throw new UserNotFoundException("Пользователь не найден");
             }
 
             if (user.RefreshToken != refreshTokensRequest.RefreshToken || user.RefreshTokenExpiresAt < DateTime.UtcNow)
             {
-                throw new SecurityTokenException("Неверный refresh-token");
+                throw new InvalidTokenException("Неверный refresh-token");
             }
 
             var refreshToken = _tokensService.GenerateRefreshToken();
