@@ -2,8 +2,7 @@
 
 namespace FitnessTracker.Application.Exceptions.Auth
 {
-    public class InvalidTokenException : UnauthorizedException
+    public class InvalidTokenException(string message) : UnauthorizedException(message)
     {
-        public InvalidTokenException(string message) : base(message) { }
     }
 }

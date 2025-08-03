@@ -1,8 +1,6 @@
 ﻿namespace FitnessTracker.Application.Exceptions.Auth
 {
-    public class InvalidPasswordException : BadRequestException
+    public class InvalidPasswordException(string message) : BadRequestException(message)
     {
-        public InvalidPasswordException(string message) : base(message) { }
-
     }
 }

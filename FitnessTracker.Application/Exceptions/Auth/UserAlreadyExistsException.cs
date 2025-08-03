@@ -1,9 +1,7 @@
 ﻿namespace FitnessTracker.Application.Exceptions.Auth
 {
     
-    public class UserAlreadyExistsException : ConflictException
+    public class UserAlreadyExistsException(string message) : ConflictException(message)
     {
-        public UserAlreadyExistsException(string message) : base(message) { }
-
     }
 }

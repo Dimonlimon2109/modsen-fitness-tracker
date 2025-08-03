@@ -1,7 +1,6 @@
 ﻿namespace FitnessTracker.Application.Exceptions.Auth
 {
-    public class UserNotFoundException : NotFoundException
+    public class UserNotFoundException(string message) : NotFoundException(message)
     {
-        public UserNotFoundException(string message) : base(message) { }
     }
 }
