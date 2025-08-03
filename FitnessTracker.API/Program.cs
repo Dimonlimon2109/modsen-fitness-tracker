@@ -103,6 +103,7 @@ builder.Services.AddScoped<ICreateWorkoutUseCase, CreateWorkoutUseCase>();
 builder.Services.AddScoped<IGetAllWorkoutsUseCase, GetAllWorkoutsUseCase>();
 builder.Services.AddScoped<IGetWorkoutByIdUseCase, GetWorkoutByIdUseCase>();
 builder.Services.AddScoped<IDeleteWorkoutUseCase, DeleteWorkoutUseCase>();
+builder.Services.AddScoped<IUpdateWorkoutUseCase, UpdateWorkoutUseCase>();
 //jwt
 
 var jwtSettings = builder.Configuration

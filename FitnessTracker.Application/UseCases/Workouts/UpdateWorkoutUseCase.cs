@@ -3,12 +3,13 @@ using AutoMapper;
 using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Exceptions.Workouts;
+using FitnessTracker.Application.Interfaces.Workouts;
 using FitnessTracker.Domain.Entities;
 using FitnessTracker.Domain.Interfaces.Repositories;
 
 namespace FitnessTracker.Application.UseCases.Workouts
 {
-    public class UpdateWorkoutUseCase
+    public class UpdateWorkoutUseCase : IUpdateWorkoutUseCase
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IUserRepository _userRepository;

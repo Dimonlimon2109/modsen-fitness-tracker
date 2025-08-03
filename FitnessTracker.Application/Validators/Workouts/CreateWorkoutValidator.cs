@@ -20,7 +20,7 @@ namespace FitnessTracker.Application.Validators.Workouts
                 .GreaterThan(WorkoutValidationConstants.MoreThanCaloriesNumber).WithMessage(WorkoutValidationConstants.CaloriesNonPositive);
 
             RuleFor(x => x.WorkoutDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(WorkoutValidationConstants.DateInFuture);
+                .GreaterThanOrEqualTo(DateTime.Now).WithMessage(WorkoutValidationConstants.DateInFuture);
 
             RuleFor(x => x.Exercises)
                 .NotEmpty().WithMessage(WorkoutValidationConstants.ExercisesRequired);
