@@ -1,9 +1,6 @@
 ﻿using FitnessTracker.Application.Exceptions;
-using FitnessTracker.Application.Exceptions.Auth;
 using FluentValidation;
-using Microsoft.IdentityModel.Tokens;
 using System.Net;
-using System.Security;
 
 namespace FitnessTracker.API.Middlewares
 {

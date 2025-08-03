@@ -1,6 +1,5 @@
 ﻿
 
-using AutoMapper;
 using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Exceptions.Workouts;
 using FitnessTracker.Application.Interfaces.Workouts;

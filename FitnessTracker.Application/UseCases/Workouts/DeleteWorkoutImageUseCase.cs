@@ -2,7 +2,6 @@
 using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Exceptions.Workouts;
 using FitnessTracker.Application.Interfaces.Workouts;
-using FitnessTracker.Domain.Interfaces.Adapters;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using FitnessTracker.Infrastructure.Services;
 
