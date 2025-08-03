@@ -35,6 +35,7 @@ namespace FitnessTracker.Application.UseCases.Workouts
                 ?? throw new UserNotFoundException("Пользователь не найден");
 
             var workout = _mapper.Map<WorkoutEntity>(createWorkoutRequest);
+            workout.UserId = user.Id;
 
             await _workoutRepository.AddAsync(workout, ct);
             await _workoutRepository.SaveChangesAsync(ct);
