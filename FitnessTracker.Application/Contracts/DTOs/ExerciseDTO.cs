@@ -1,9 +1,9 @@
 ﻿
 namespace FitnessTracker.Application.Contracts.DTOs
 {
-    public record ExerciseDTO
-        (
-        string Name,
-        List<SetDTO> Sets
-        );
+    public class ExerciseDTO
+    {
+        public string Name {  get; set; }
+        public List<SetDTO> Sets { get; set; }
+    }
 }

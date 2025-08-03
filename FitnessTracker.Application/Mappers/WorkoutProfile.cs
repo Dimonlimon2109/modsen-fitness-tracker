@@ -11,7 +11,10 @@ namespace FitnessTracker.Application.Mappers
         public WorkoutProfile()
         {
             CreateMap<CreateWorkoutRequest, WorkoutEntity>();
-            CreateMap<WorkoutEntity, WorkoutDTO>();
+            CreateMap<WorkoutEntity, WorkoutDTO>()
+                .ForMember(
+                dest => dest.WorkoutType,
+                opt => opt.MapFrom(src => src.Type.ToString()));
         }
     }
 }

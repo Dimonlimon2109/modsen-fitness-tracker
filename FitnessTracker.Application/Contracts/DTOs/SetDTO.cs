@@ -1,8 +1,9 @@
 ﻿namespace FitnessTracker.Application.Contracts.DTOs
 {
-    public record SetDTO
-        (
-        int Reps,
-        double Weight
-        );
+    public class SetDTO
+    {
+        public int Reps {  get; set; }
+        public double Weight { get; set; }
+    }
+
 }
