@@ -3,11 +3,12 @@ using AutoMapper;
 using FitnessTracker.Application.Contracts.DTOs;
 using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Exceptions.Workouts;
+using FitnessTracker.Application.UseCases.Workouts;
 using FitnessTracker.Domain.Interfaces.Repositories;
 
-namespace FitnessTracker.Application.UseCases.Workouts
+namespace FitnessTracker.Application.Interfaces.Workouts
 {
-    public class GetWorkoutByIdUseCase
+    public class GetWorkoutByIdUseCase : IGetWorkoutByIdUseCase
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IUserRepository _userRepository;
@@ -36,7 +37,7 @@ namespace FitnessTracker.Application.UseCases.Workouts
             var workout = await _workoutRepository.GetByIdAsync(id, ct)
                 ?? throw new WorkoutNotFoundException("Тренировка не найдена");
 
-            if(workout.UserId != user.Id)
+            if (workout.UserId != user.Id)
             {
                 throw new WorkoutForbiddenException("Тренировка другого пользователя недоступна");
             }

@@ -1,5 +1,6 @@
 ﻿using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Interfaces.Workouts;
+using FitnessTracker.Application.UseCases.Workouts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -13,13 +14,16 @@ namespace FitnessTracker.API.Controllers
     {
         private readonly ICreateWorkoutUseCase _createWorkoutUseCase;
         private readonly IGetAllWorkoutsUseCase _getAllWorkoutsUseCase;
+        private readonly IGetWorkoutByIdUseCase _getWorkoutByIdUseCase;
 
         public WorkoutsController(
             ICreateWorkoutUseCase createWorkoutUseCase,
-            IGetAllWorkoutsUseCase getAllWorkoutsUseCase)
+            IGetAllWorkoutsUseCase getAllWorkoutsUseCase,
+            IGetWorkoutByIdUseCase getWorkoutByIdUseCase)
         {
             _createWorkoutUseCase = createWorkoutUseCase;
             _getAllWorkoutsUseCase = getAllWorkoutsUseCase;
+            _getWorkoutByIdUseCase = getWorkoutByIdUseCase;
         }
 
         [HttpPost]
@@ -44,6 +48,16 @@ namespace FitnessTracker.API.Controllers
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             var userWorkouts = await _getAllWorkoutsUseCase.ExecuteAsync(getAllWorkoutsRequest, userEmail, ct);
             return Ok(userWorkouts);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(
+            int id,
+            CancellationToken ct = default)
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var workout = await _getWorkoutByIdUseCase.ExecuteAsync(id, userEmail, ct);
+            return Ok(workout);
         }
     }
 }
