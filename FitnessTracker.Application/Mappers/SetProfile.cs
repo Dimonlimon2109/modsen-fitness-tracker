@@ -9,7 +9,8 @@ namespace FitnessTracker.Application.Mappers
     {
         public SetProfile()
         {
-            CreateMap<SetDTO, Set>();
+            CreateMap<SetDTO, Set>()
+                .ReverseMap();
         }
     }
 }

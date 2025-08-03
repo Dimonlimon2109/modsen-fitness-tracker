@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using FitnessTracker.Application.Contracts.DTOs;
 using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Domain.Entities;
 
@@ -10,6 +11,7 @@ namespace FitnessTracker.Application.Mappers
         public WorkoutProfile()
         {
             CreateMap<CreateWorkoutRequest, WorkoutEntity>();
+            CreateMap<WorkoutEntity, WorkoutDTO>();
         }
     }
 }
