@@ -8,7 +8,7 @@ namespace FitnessTracker.Application.Contracts.Requests
         (
         string Title,
         WorkoutType Type,
-        IEnumerable<ExerciseDTO> Exercises,
+        List<ExerciseDTO> Exercises,
         TimeSpan Duration,
         int CaloriesBurned,
         DateTime WorkoutDate
