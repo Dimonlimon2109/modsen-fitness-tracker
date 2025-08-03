@@ -102,6 +102,7 @@ builder.Services.AddScoped<IRefreshTokensUseCase, RefreshTokensUseCase>();
 builder.Services.AddScoped<ICreateWorkoutUseCase, CreateWorkoutUseCase>();
 builder.Services.AddScoped<IGetAllWorkoutsUseCase, GetAllWorkoutsUseCase>();
 builder.Services.AddScoped<IGetWorkoutByIdUseCase, GetWorkoutByIdUseCase>();
+builder.Services.AddScoped<IDeleteWorkoutUseCase, DeleteWorkoutUseCase>();
 //jwt
 
 var jwtSettings = builder.Configuration

@@ -1,35 +1,31 @@
 ﻿
+
 using AutoMapper;
-using FitnessTracker.Application.Contracts.DTOs;
 using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Exceptions.Workouts;
-using FitnessTracker.Application.UseCases.Workouts;
+using FitnessTracker.Application.Interfaces.Workouts;
 using FitnessTracker.Domain.Interfaces.Repositories;
 
-namespace FitnessTracker.Application.Interfaces.Workouts
+namespace FitnessTracker.Application.UseCases.Workouts
 {
-    public class GetWorkoutByIdUseCase : IGetWorkoutByIdUseCase
+    public class DeleteWorkoutUseCase : IDeleteWorkoutUseCase
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
-        public GetWorkoutByIdUseCase(
+        public DeleteWorkoutUseCase(
             IWorkoutRepository workoutRepository,
-            IUserRepository userRepository,
-            IMapper mapper
+            IUserRepository userRepository
             )
         {
             _workoutRepository = workoutRepository;
             _userRepository = userRepository;
-            _mapper = mapper;
         }
 
-        public async Task<WorkoutDTO> ExecuteAsync(
+        public async Task ExecuteAsync(
             int id,
             string userEmail,
-            CancellationToken ct = default
-            )
+            CancellationToken ct = default)
         {
             var user = await _userRepository.GetUserByEmailAsync(userEmail, ct)
                 ?? throw new UserNotFoundException("Пользователь не найден");
@@ -42,7 +38,8 @@ namespace FitnessTracker.Application.Interfaces.Workouts
                 throw new WorkoutForbiddenException("Тренировка другого пользователя недоступна");
             }
 
-            return _mapper.Map<WorkoutDTO>(workout);
+            await _workoutRepository.DeleteAsync(id, ct);
+            await _workoutRepository.SaveChangesAsync();
         }
     }
 }

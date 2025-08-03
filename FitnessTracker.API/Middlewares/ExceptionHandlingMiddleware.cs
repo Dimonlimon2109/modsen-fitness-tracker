@@ -35,6 +35,11 @@ namespace FitnessTracker.API.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await HandleExceptionAsync(context, ex.Message);
             }
+            catch(ForbiddenException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                await HandleExceptionAsync(context, ex.Message);
+            }
             catch (BadRequestException ex)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

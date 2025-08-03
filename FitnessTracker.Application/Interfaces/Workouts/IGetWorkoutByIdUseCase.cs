@@ -1,6 +1,6 @@
 ﻿using FitnessTracker.Application.Contracts.DTOs;
 
-namespace FitnessTracker.Application.UseCases.Workouts
+namespace FitnessTracker.Application.Interfaces.Workouts
 {
     public interface IGetWorkoutByIdUseCase
     {

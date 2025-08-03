@@ -1,6 +1,5 @@
 ﻿using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Interfaces.Workouts;
-using FitnessTracker.Application.UseCases.Workouts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -15,15 +14,17 @@ namespace FitnessTracker.API.Controllers
         private readonly ICreateWorkoutUseCase _createWorkoutUseCase;
         private readonly IGetAllWorkoutsUseCase _getAllWorkoutsUseCase;
         private readonly IGetWorkoutByIdUseCase _getWorkoutByIdUseCase;
-
+        private readonly IDeleteWorkoutUseCase _deleteWorkoutUseCase;
         public WorkoutsController(
             ICreateWorkoutUseCase createWorkoutUseCase,
             IGetAllWorkoutsUseCase getAllWorkoutsUseCase,
-            IGetWorkoutByIdUseCase getWorkoutByIdUseCase)
+            IGetWorkoutByIdUseCase getWorkoutByIdUseCase,
+            IDeleteWorkoutUseCase deleteWorkoutUseCase)
         {
             _createWorkoutUseCase = createWorkoutUseCase;
             _getAllWorkoutsUseCase = getAllWorkoutsUseCase;
             _getWorkoutByIdUseCase = getWorkoutByIdUseCase;
+            _deleteWorkoutUseCase = deleteWorkoutUseCase;
         }
 
         [HttpPost]
@@ -58,6 +59,17 @@ namespace FitnessTracker.API.Controllers
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             var workout = await _getWorkoutByIdUseCase.ExecuteAsync(id, userEmail, ct);
             return Ok(workout);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(
+            int id,
+            CancellationToken ct = default)
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            await _deleteWorkoutUseCase.ExecuteAsync(id, userEmail, ct);
+
+            return NoContent();
         }
     }
 }
