@@ -18,13 +18,15 @@ namespace FitnessTracker.API.Controllers
         private readonly IDeleteWorkoutUseCase _deleteWorkoutUseCase;
         private readonly IUpdateWorkoutUseCase _updateWorkoutUseCase;
         private readonly IUploadWorkoutImageUseCase _uploadWorkoutImageUseCase;
+        private readonly IDeleteWorkoutImageUseCase _deleteWorkoutImageUseCase;
         public WorkoutsController(
             ICreateWorkoutUseCase createWorkoutUseCase,
             IGetAllWorkoutsUseCase getAllWorkoutsUseCase,
             IGetWorkoutByIdUseCase getWorkoutByIdUseCase,
             IDeleteWorkoutUseCase deleteWorkoutUseCase,
             IUpdateWorkoutUseCase updateWorkoutUseCase,
-            IUploadWorkoutImageUseCase uploadWorkoutImageUseCase)
+            IUploadWorkoutImageUseCase uploadWorkoutImageUseCase,
+            IDeleteWorkoutImageUseCase deleteWorkoutImageUseCase)
         {
             _createWorkoutUseCase = createWorkoutUseCase;
             _getAllWorkoutsUseCase = getAllWorkoutsUseCase;
@@ -32,6 +34,7 @@ namespace FitnessTracker.API.Controllers
             _deleteWorkoutUseCase = deleteWorkoutUseCase;
             _updateWorkoutUseCase = updateWorkoutUseCase;
             _uploadWorkoutImageUseCase = uploadWorkoutImageUseCase;
+            _deleteWorkoutImageUseCase = deleteWorkoutImageUseCase;
         }
 
         [HttpPost]
@@ -100,6 +103,19 @@ namespace FitnessTracker.API.Controllers
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             var imageAdapter = new FormFileAdapter(imageFile);
             await _uploadWorkoutImageUseCase.ExecuteAsync(id, imageAdapter, userEmail, ct);
+            return NoContent();
+        }
+
+        [HttpDelete()]
+        public async Task<IActionResult> DeleteImage
+            (
+            int id, 
+            string imagePath,
+            CancellationToken ct = default
+            )
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            await _deleteWorkoutImageUseCase.ExecuteAsync(id, imagePath, userEmail, ct);
             return NoContent();
         }
     }
