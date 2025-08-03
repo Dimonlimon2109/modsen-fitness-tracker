@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FitnessTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(FitnessDbContext))]
-    [Migration("20250803145439_WorkoutEntity")]
-    partial class WorkoutEntity
+    [Migration("20250803163637_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,8 +81,7 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasColumnType("interval");
 
                     b.Property<string>("ProgressPhotos")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("jsonb");
 
                     b.Property<string>("Title")
                         .IsRequired()

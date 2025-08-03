@@ -1,7 +1,5 @@
 ﻿using FitnessTracker.Application.Contracts.Requests;
-using FitnessTracker.Application.Contracts.Responses;
 using FitnessTracker.Application.Interfaces.Auth;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTracker.API.Controllers

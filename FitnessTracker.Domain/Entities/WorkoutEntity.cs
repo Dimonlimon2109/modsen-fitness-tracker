@@ -12,7 +12,7 @@ namespace FitnessTracker.Domain.Entities
         public List<Exercise> Exercises { get; set; }
         public TimeSpan Duration { get; set; }
         public int CaloriesBurned { get; set; }
-        public List<string> ProgressPhotos { get; set; }
+        public List<string>? ProgressPhotos { get; set; }
         public DateTime WorkoutDate { get; set; }
     }
 }

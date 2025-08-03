@@ -78,8 +78,7 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasColumnType("interval");
 
                     b.Property<string>("ProgressPhotos")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("jsonb");
 
                     b.Property<string>("Title")
                         .IsRequired()

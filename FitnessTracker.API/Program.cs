@@ -1,6 +1,9 @@
 using FitnessTracker.API.Middlewares;
 using FitnessTracker.Application.Interfaces.Auth;
+using FitnessTracker.Application.Interfaces.Workouts;
+using FitnessTracker.Application.Mappers;
 using FitnessTracker.Application.UseCases.Auth;
+using FitnessTracker.Application.UseCases.Workouts;
 using FitnessTracker.Application.Validators.Auth;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using FitnessTracker.Domain.Interfaces.Services;
@@ -12,6 +15,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -69,9 +73,17 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(RegisterValidator));
 
+//Mappers
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<WorkoutProfile>();
+    cfg.AddProfile<ExerciseProfile>();
+    cfg.AddProfile<SetProfile>();
+});
+
 //Repos
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 
 //Services
 builder.Services.AddScoped<IPasswordService, BCryptPasswordService>();
@@ -83,7 +95,8 @@ builder.Services.AddScoped<ITokensService, JwtTokenService>();
 builder.Services.AddScoped<IRegisterUseCase, RegisterUseCase>();
 builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
 builder.Services.AddScoped<IRefreshTokensUseCase, RefreshTokensUseCase>();
-
+//Workouts
+builder.Services.AddScoped<ICreateWorkoutUseCase, CreateWorkoutUseCase>();
 //jwt
 
 var jwtSettings = builder.Configuration
