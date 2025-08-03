@@ -43,7 +43,9 @@ namespace FitnessTracker.Application.UseCases.Workouts
 
             var imagePath = await _imageService.UploadImageAsync(image, ct);
 
-            workout.ProgressPhotos?.Add(imagePath);
+            if (workout.ProgressPhotos == null)
+                workout.ProgressPhotos = new();
+            workout.ProgressPhotos.Add(imagePath);
             _workoutRepository.Update(workout);
             await _workoutRepository.SaveChangesAsync();
         }

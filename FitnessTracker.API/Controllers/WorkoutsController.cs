@@ -1,4 +1,5 @@
-﻿using FitnessTracker.Application.Contracts.Requests;
+﻿using FitnessTracker.API.Adapters;
+using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Interfaces.Workouts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +17,21 @@ namespace FitnessTracker.API.Controllers
         private readonly IGetWorkoutByIdUseCase _getWorkoutByIdUseCase;
         private readonly IDeleteWorkoutUseCase _deleteWorkoutUseCase;
         private readonly IUpdateWorkoutUseCase _updateWorkoutUseCase;
+        private readonly IUploadWorkoutImageUseCase _uploadWorkoutImageUseCase;
         public WorkoutsController(
             ICreateWorkoutUseCase createWorkoutUseCase,
             IGetAllWorkoutsUseCase getAllWorkoutsUseCase,
             IGetWorkoutByIdUseCase getWorkoutByIdUseCase,
             IDeleteWorkoutUseCase deleteWorkoutUseCase,
-            IUpdateWorkoutUseCase updateWorkoutUseCase)
+            IUpdateWorkoutUseCase updateWorkoutUseCase,
+            IUploadWorkoutImageUseCase uploadWorkoutImageUseCase)
         {
             _createWorkoutUseCase = createWorkoutUseCase;
             _getAllWorkoutsUseCase = getAllWorkoutsUseCase;
             _getWorkoutByIdUseCase = getWorkoutByIdUseCase;
             _deleteWorkoutUseCase = deleteWorkoutUseCase;
             _updateWorkoutUseCase = updateWorkoutUseCase;
+            _uploadWorkoutImageUseCase = uploadWorkoutImageUseCase;
         }
 
         [HttpPost]
@@ -83,6 +87,20 @@ namespace FitnessTracker.API.Controllers
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             await _updateWorkoutUseCase.ExecuteAsync(updateWorkoutRequest, userEmail, ct);
             return Ok();
+        }
+
+        [HttpPost("{id:int}")]
+        public async Task<IActionResult> UploadImage
+            (
+            int id,
+            IFormFile imageFile,
+            CancellationToken ct = default
+            )
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var imageAdapter = new FormFileAdapter(imageFile);
+            await _uploadWorkoutImageUseCase.ExecuteAsync(id, imageAdapter, userEmail, ct);
+            return NoContent();
         }
     }
 }

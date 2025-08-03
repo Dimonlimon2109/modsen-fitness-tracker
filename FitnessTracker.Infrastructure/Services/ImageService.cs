@@ -27,7 +27,7 @@ namespace FitnessTracker.Infrastructure.Services
                 await image.CopyToAsync(fs, ct);
             }
 
-            return Path.Combine(_rootPath.RootPath, uniqueFileName);
+            return uniqueFileName;
         }
 
         public Task DeleteImageAsync(string imagePath)
