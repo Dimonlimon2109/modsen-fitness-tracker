@@ -1,4 +1,6 @@
-﻿namespace FitnessTracker.API.Adapters
+﻿using FitnessTracker.Domain.Interfaces.Adapters;
+
+namespace FitnessTracker.API.Adapters
 {
     public class WebHostAdapter : IRootPath
     {

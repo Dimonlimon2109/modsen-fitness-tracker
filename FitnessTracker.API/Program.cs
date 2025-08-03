@@ -1,3 +1,4 @@
+using FitnessTracker.API.Adapters;
 using FitnessTracker.API.Middlewares;
 using FitnessTracker.Application.Interfaces.Auth;
 using FitnessTracker.Application.Interfaces.Workouts;
@@ -5,6 +6,7 @@ using FitnessTracker.Application.Mappers;
 using FitnessTracker.Application.UseCases.Auth;
 using FitnessTracker.Application.UseCases.Workouts;
 using FitnessTracker.Application.Validators.Auth;
+using FitnessTracker.Domain.Interfaces.Adapters;
 using FitnessTracker.Domain.Interfaces.Repositories;
 using FitnessTracker.Domain.Interfaces.Services;
 using FitnessTracker.Infrastructure;
@@ -18,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Numerics;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -91,7 +94,8 @@ builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
 //Services
 builder.Services.AddScoped<IPasswordService, BCryptPasswordService>();
 builder.Services.AddScoped<ITokensService, JwtTokenService>();
-
+builder.Services.AddScoped<IRootPath, WebHostAdapter>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 //UseCases
 //Auth
@@ -104,6 +108,7 @@ builder.Services.AddScoped<IGetAllWorkoutsUseCase, GetAllWorkoutsUseCase>();
 builder.Services.AddScoped<IGetWorkoutByIdUseCase, GetWorkoutByIdUseCase>();
 builder.Services.AddScoped<IDeleteWorkoutUseCase, DeleteWorkoutUseCase>();
 builder.Services.AddScoped<IUpdateWorkoutUseCase, UpdateWorkoutUseCase>();
+builder.Services.AddScoped<IUploadWorkoutImageUseCase, UploadWorkoutImageUseCase>();
 //jwt
 
 var jwtSettings = builder.Configuration
