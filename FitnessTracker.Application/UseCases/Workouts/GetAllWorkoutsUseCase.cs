@@ -4,11 +4,12 @@ using FitnessTracker.Application.Contracts.DTOs;
 using FitnessTracker.Application.Contracts.Requests;
 using FitnessTracker.Application.Contracts.Responses;
 using FitnessTracker.Application.Exceptions.Auth;
+using FitnessTracker.Application.Interfaces.Workouts;
 using FitnessTracker.Domain.Interfaces.Repositories;
 
 namespace FitnessTracker.Application.UseCases.Workouts
 {
-    public class GetAllWorkoutsUseCase
+    public class GetAllWorkoutsUseCase : IGetAllWorkoutsUseCase
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IUserRepository _userRepository;

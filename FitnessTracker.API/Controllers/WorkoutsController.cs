@@ -12,10 +12,14 @@ namespace FitnessTracker.API.Controllers
     public class WorkoutsController : ControllerBase
     {
         private readonly ICreateWorkoutUseCase _createWorkoutUseCase;
+        private readonly IGetAllWorkoutsUseCase _getAllWorkoutsUseCase;
 
-        public WorkoutsController(ICreateWorkoutUseCase createWorkoutUseCase)
+        public WorkoutsController(
+            ICreateWorkoutUseCase createWorkoutUseCase,
+            IGetAllWorkoutsUseCase getAllWorkoutsUseCase)
         {
             _createWorkoutUseCase = createWorkoutUseCase;
+            _getAllWorkoutsUseCase = getAllWorkoutsUseCase;
         }
 
         [HttpPost]
@@ -29,6 +33,17 @@ namespace FitnessTracker.API.Controllers
             await _createWorkoutUseCase.ExecuteAsync(createWorkoutRequest, userEmail, ct);
 
             return Created();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(
+            [FromQuery] GetAllWorkoutsRequest getAllWorkoutsRequest,
+            CancellationToken ct = default
+            )
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userWorkouts = await _getAllWorkoutsUseCase.ExecuteAsync(getAllWorkoutsRequest, userEmail, ct);
+            return Ok(userWorkouts);
         }
     }
 }

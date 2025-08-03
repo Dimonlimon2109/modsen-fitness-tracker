@@ -5,7 +5,7 @@ namespace FitnessTracker.Application.Contracts.Responses
 {
     public record GetAllWorkoutsResponse
         (
-        List<WorkoutDTO> Workouts,
+        List<WorkoutDTO>? Workouts,
         int TotalPages
         );
 }

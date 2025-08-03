@@ -8,7 +8,7 @@ namespace FitnessTracker.Infrastructure.Repositories
 {
     public class WorkoutRepository(FitnessDbContext context) : Repository<WorkoutEntity>(context), IWorkoutRepository
     {
-        public async Task<List<WorkoutEntity>> GetAllWorkoutsWithFiltersAsync(
+        public async Task<List<WorkoutEntity>?> GetAllWorkoutsWithFiltersAsync(
             int userId,
             string? title,
             WorkoutType? type,
@@ -19,7 +19,7 @@ namespace FitnessTracker.Infrastructure.Repositories
             int page,
             int pageSize,
             string? sortBy,
-            string order,
+            string? order,
             CancellationToken ct = default
             )
         {

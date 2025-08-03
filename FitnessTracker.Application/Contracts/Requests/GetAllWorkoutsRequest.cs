@@ -14,6 +14,6 @@ namespace FitnessTracker.Application.Contracts.Requests
         int Page,
         int PageSize,
         string? SortBy,
-        string Order
+        string? Order
         );
 }

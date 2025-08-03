@@ -6,7 +6,7 @@ namespace FitnessTracker.Domain.Interfaces.Repositories
 {
     public interface IWorkoutRepository : IRepository<WorkoutEntity>
     {
-        Task<List<WorkoutEntity>> GetAllWorkoutsWithFiltersAsync(
+        Task<List<WorkoutEntity>?> GetAllWorkoutsWithFiltersAsync(
             int userId,
             string? title,
             WorkoutType? type,
