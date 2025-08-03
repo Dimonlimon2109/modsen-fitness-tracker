@@ -5,7 +5,8 @@ namespace FitnessTracker.Domain.Entities
 {
     public class WorkoutEntity : EntityBase
     {
-        public string UserId { get; set; }
+        public int UserId { get; set; }
+        public UserEntity User { get; set; }
         public string Title { get; set; }
         public WorkoutType Type { get; set; }
         public List<Exercise> Exercises { get; set; }
