@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  fitnesstracker.api:
+    image: ${DOCKER_REGISTRY-}fitnesstrackerapi
+    build:
+      context: .
+      dockerfile: FitnessTracker.API/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__FitnessDbContext=Host=db;Port=5432;Database=FitnessTrackerDB;Username=postgres;Password=1111;
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: fitnesstracker-db
+    restart: always
+    environment:
+      POSTGRES_DB: FitnessTrackerDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+    ports:
+      - "5432:5432"
+    volumes:
+      - fitnesstracker-db-data:/var/lib/postgresql/data
+
+volumes:
+  fitnesstracker-db-data:

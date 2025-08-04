@@ -1,30 +1,46 @@
-# См. статью по ссылке https://aka.ms/customizecontainer, чтобы узнать как настроить контейнер отладки и как Visual Studio использует этот Dockerfile для создания образов для ускорения отладки.
-
-# Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)
+# 1. Базовый runtime образ
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
 
-
-# Этот этап используется для сборки проекта службы
+# 2. Образ для сборки
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["FitnessTracker.API/FitnessTracker.API.csproj", "FitnessTracker.API/"]
+COPY ["FitnessTracker.Application/FitnessTracker.Application.csproj", "FitnessTracker.Application/"]
+COPY ["FitnessTracker.Domain/FitnessTracker.Domain.csproj", "FitnessTracker.Domain/"]
+COPY ["FitnessTracker.Infrastructure/FitnessTracker.Infrastructure.csproj", "FitnessTracker.Infrastructure/"]
 RUN dotnet restore "./FitnessTracker.API/FitnessTracker.API.csproj"
 COPY . .
 WORKDIR "/src/FitnessTracker.API"
 RUN dotnet build "./FitnessTracker.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
+# 3. Публикация проекта
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./FitnessTracker.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
-FROM base AS final
+# 4. Финальный образ с SDK и dotnet-ef, для возможности применять миграции
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
+
 WORKDIR /app
+
+# Устанавливаем dotnet-ef глобально
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Копируем опубликованные dll и файлы из publish
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "FitnessTracker.API.dll"]
+
+# **ВАЖНО: копируем исходники для возможности создания/применения миграций**
+COPY FitnessTracker.API ./FitnessTracker.API
+COPY FitnessTracker.Infrastructure ./FitnessTracker.Infrastructure
+COPY FitnessTracker.Application ./FitnessTracker.Application
+COPY FitnessTracker.Domain ./FitnessTracker.Domain
+
+# Копируем и делаем исполняемым скрипт entrypoint.sh
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
