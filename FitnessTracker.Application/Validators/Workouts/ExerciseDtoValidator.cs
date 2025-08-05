@@ -12,7 +12,7 @@ namespace FitnessTracker.Application.Validators.Workouts
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(WorkoutValidationConstants.ExerciseNameEmpty)
-                .MaximumLength(WorkoutValidationConstants.ExerciseNameMaxLenght);
+                .MaximumLength(WorkoutValidationConstants.ExerciseNameMaxLength);
 
             RuleFor(x => x.Sets)
                 .NotEmpty().WithMessage(WorkoutValidationConstants.SetsRequired);
