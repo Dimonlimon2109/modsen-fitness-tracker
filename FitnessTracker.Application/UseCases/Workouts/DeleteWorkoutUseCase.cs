@@ -4,6 +4,7 @@ using FitnessTracker.Application.Exceptions.Auth;
 using FitnessTracker.Application.Exceptions.Workouts;
 using FitnessTracker.Application.Interfaces.Workouts;
 using FitnessTracker.Domain.Interfaces.Repositories;
+using FitnessTracker.Infrastructure.Services;
 
 namespace FitnessTracker.Application.UseCases.Workouts
 {
@@ -11,14 +12,17 @@ namespace FitnessTracker.Application.UseCases.Workouts
     {
         private readonly IWorkoutRepository _workoutRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IImageService _imageService;
 
         public DeleteWorkoutUseCase(
             IWorkoutRepository workoutRepository,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IImageService imageService
             )
         {
             _workoutRepository = workoutRepository;
             _userRepository = userRepository;
+            _imageService = imageService;
         }
 
         public async Task ExecuteAsync(
@@ -27,18 +31,26 @@ namespace FitnessTracker.Application.UseCases.Workouts
             CancellationToken ct = default)
         {
             var user = await _userRepository.GetUserByEmailAsync(userEmail, ct)
-                ?? throw new UserNotFoundException("Пользователь не найден");
+                ?? throw new UserNotFoundException("User not found");
 
             var workout = await _workoutRepository.GetByIdAsync(id, ct)
-                ?? throw new WorkoutNotFoundException("Тренировка не найдена");
+                ?? throw new WorkoutNotFoundException("Workout not found");
 
             if (workout.UserId != user.Id)
             {
-                throw new WorkoutForbiddenException("Тренировка другого пользователя недоступна");
+                throw new WorkoutForbiddenException("Another user's workout is unavailable");
             }
 
             await _workoutRepository.DeleteAsync(id, ct);
             await _workoutRepository.SaveChangesAsync();
+
+            if (workout.ProgressPhotos != null)
+            {
+                foreach (var photoPath in workout.ProgressPhotos)
+                {
+                    await _imageService.DeleteImageAsync(photoPath);
+                }
+            }
         }
     }
 }

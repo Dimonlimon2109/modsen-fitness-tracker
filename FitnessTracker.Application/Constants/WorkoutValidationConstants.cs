@@ -3,21 +3,21 @@ namespace FitnessTracker.Application.Constants
 {
     public class WorkoutValidationConstants
     {
-        public const string TitleEmpty = "Название тренировки не может быть пустым.";
-        public const string TitleTooLong = "Название тренировки не должно превышать 100 символов.";
-        public const string DurationTooShort = "Длительность тренировки должна быть больше 0.";
-        public const string CaloriesNonPositive = "Количество сожжённых калорий должно быть больше 0.";
-        public const string DateInFuture = "Дата тренировки не может быть в будущем.";
-        public const string ExercisesRequired = "Тренировка должна содержать хотя бы одно упражнение.";
+        public const string TitleEmpty = "Workout title cannot be empty.";
+        public const string TitleTooLong = "Workout title must not exceed 100 characters.";
+        public const string DurationTooShort = "Workout duration must be greater than 0.";
+        public const string CaloriesNonPositive = "Calories burned must be greater than 0.";
+        public const string DateInFuture = "Workout date cannot be in the future.";
+        public const string ExercisesRequired = "Workout must contain at least one exercise.";
         public const int TitleMaxLength = 100;
         public static readonly TimeSpan MinWorkoutDuration = TimeSpan.Zero;
         public const int MoreThanCaloriesNumber = 0;
-        public const string ExerciseNameEmpty = "Название упражнения обязательно.";
-        public const int ExerciseNameMaxLenght = 100;
-        public const string SetsRequired = "Упражнение должно содержать хотя бы один подход.";
+        public const string ExerciseNameEmpty = "Exercise name is required.";
+        public const int ExerciseNameMaxLength = 100;
+        public const string SetsRequired = "Exercise must contain at least one set.";
         public const int MoreThanRepsNumber = 0;
-        public const string MoreThanRepsMessage = "Количество повторений должно быть больше 0.";
+        public const string MoreThanRepsMessage = "Number of repetitions must be greater than 0.";
         public const int MoreThanWeight = 0;
-        public const string WeightNonPositive = "Вес должен быть больше 0.";
+        public const string WeightNonPositive = "Weight must be greater than 0.";
     }
 }

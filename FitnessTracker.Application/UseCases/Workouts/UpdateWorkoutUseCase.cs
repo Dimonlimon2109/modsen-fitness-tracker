@@ -32,14 +32,14 @@ namespace FitnessTracker.Application.UseCases.Workouts
             CancellationToken ct = default)
         {
             var user = await _userRepository.GetUserByEmailAsync(userEmail, ct)
-                ?? throw new UserNotFoundException("Пользователь не найден");
+                ?? throw new UserNotFoundException("User not found");
 
             var workout = await _workoutRepository.GetByIdAsync(updateWorkoutRequest.Id, ct)
-                ?? throw new WorkoutNotFoundException("Тренировка не найдена");
+                ?? throw new WorkoutNotFoundException("Workout not found");
 
             if (workout.UserId != user.Id)
             {
-                throw new WorkoutForbiddenException("Тренировка другого пользователя недоступна");
+                throw new WorkoutForbiddenException("Another user's workout is unavailable");
             }
 
             workout.Title = updateWorkoutRequest.Title;

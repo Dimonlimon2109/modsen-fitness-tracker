@@ -32,7 +32,7 @@ namespace FitnessTracker.Application.UseCases.Workouts
             )
         {
             var user = await _userRepository.GetUserByEmailAsync(userEmail, ct)
-                ?? throw new UserNotFoundException("Пользователь не найден");
+                ?? throw new UserNotFoundException("User not found");
 
             var workout = _mapper.Map<WorkoutEntity>(createWorkoutRequest);
             workout.UserId = user.Id;
