@@ -11,5 +11,5 @@ docker-compose up --build
 - Swagger UI: https://localhost:8081/swagger/index.html
 
 ## Тестовые пользователи:
-- email: user1@gmail.com, password: 12345678Q~,
+- email: user1@gmail.com, password: 12345678Q~
 - email: user2@gmail.com, password: 12345678Q~
